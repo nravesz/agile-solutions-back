@@ -50,13 +50,10 @@ app.get("/api/options", (req, res) => {
         }
 
         const response = {
-            status: "success",
-            data: {
-                options: options
-            }
+            options: options
         }
         console.log(response);
-        return res.json(response);
+        return res.status(200).json(response);
     } catch (error) {
         return res.json({
             status: "error",
@@ -68,22 +65,20 @@ app.get("/api/options", (req, res) => {
 // get the sales' month list
 app.get("/api/sales", (req, res) => {
     try {
-        const category = req.body.category;
-        const product = req.body.product;
-        const brand = req.body.brand;
+        console.log("query: ",req.query);
+        const category = req.query.category;
+        const product = req.query.product;
+        const brand = req.query.brand;
 
         const sales = data[category][product][brand];
 
         if (sales != undefined) {
             let response = {
-                status: "success",
-                data: {
-                    sales: sales
-                }
+                sales: sales
             }
 
             console.log("GET: ", response);
-            return res.json(response)
+            return res.status(200).json(response)
         } else {
             let response = {
                 status: "failed",
